@@ -113,7 +113,6 @@ function playRound (playerSelection, computerSelection) {
 
 function game() {
     let roundResult;
-    let scoring;
     let playerScore = 0;
     let computerScore = 0;
     let calcScore = (scoreNum) => {
@@ -131,12 +130,12 @@ function game() {
     }
     for (let i = 0; i < 5; i++) {
         roundResult = playRound(prompt("rock, paper, or scissors").toLowerCase(), getComputerChoice());
-        scoring = calcScore(roundResult.slice(0,1));
+        calcScore(roundResult.slice(0,1));
         console.log(roundResult.slice(1));
     }
     while (computerScore === playerScore) {
         roundResult = playRound(prompt("rock, paper, or scissors").toLowerCase(), getComputerChoice());
-        scoring = calcScore(roundResult.slice(0,1));
+        calcScore(roundResult.slice(0,1));
         console.log(roundResult.slice(1));
     }
     let finalResult = playerScore > computerScore ? "win" : "lose";
