@@ -16,90 +16,56 @@ function playRound (playerSelection, computerSelection) {
     let loser;
     let score;
 
-    let convertToNum = (pSel, cSel) => {
-        let pnum;
-        let cnum;
-
-        switch (pSel) {
-            case "rock":
-                pnum = 1;
-                break;
-            case "paper":
-                pnum = 2;
-                break;
-            case "scissors":
-                pnum = 3;
-                break;
-            default:
-                alert("Whatever you entered, it certainly wasn't one of the right options, so you get rock");
-                pnum = 1;
-                playerSelection = "rock";
-        }
-        switch (cSel) {
-            case "rock":
-                cnum = 8;
-                break;
-            case "paper":
-                cnum = 9;
-                break;
-            case "scissors":
-                cnum = 10;
-                break;
-        }
-
-        return pnum * cnum;
-    }
-
-    switch (convertToNum(playerSelection, computerSelection)) {
-        case 8: {
+    switch (playerSelection.concat(computerSelection, "")) {
+        case "rockrock": {
             winlose = "tied";
             score = 1; 
             break;
         }
-        case 9: {
+        case "rockpaper": {
             winlose = "lose";
             winner = "paper";
             loser = "rock";
             score = 0;
             break;
         }
-        case 10: {
+        case "rockscissors": {
             winlose = "win";
             winner = "rock";
             loser = "scissors";
             score = 2;
             break;
         }
-        case 16: {
+        case "paperrock": {
             winlose = "win";
             winner = "paper";
             loser = "rock";
             score = 2;
             break;
         }
-        case 18: 
+        case "paperpaper": 
             winlose = "tied";
             score = 1; 
             break;
-        case 20:
+        case "paperscissors":
             winlose = "lose";
             winner = "scissors";
             loser = "paper";
             score = 0;
             break;
-        case 24:
+        case "scissorsrock":
             winlose = "lose";
             winner = "rock";
             loser = "scissors";
             score = 0;
             break;
-        case 27:
+        case "scissorspaper":
             winlose = "win";
             winner = "scissors";
             loser = "paper";
             score = 2;
             break;
-        case 30: {
+        case "scissorsscissors": {
             winlose = "tied";
             score = 1; 
         }
