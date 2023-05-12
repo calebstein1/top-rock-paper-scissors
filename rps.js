@@ -95,7 +95,21 @@ function game() {
         
     }
     for (let i = 0; i < 5; i++) {
-        roundResult = playRound(prompt("rock, paper, or scissors").toLowerCase(), getComputerChoice());
+        let validatePlayerSelection = (pSelection) => {
+            switch (pSelection) {
+                case "rock":
+                    break;
+                case "paper":
+                    break;
+                case "scissors":
+                    break;
+                default:
+                    console.log("Invalid entry, defaulting to rock");
+                    pSelection = "rock";
+            }
+            return pSelection;
+        }
+        roundResult = playRound(validatePlayerSelection(prompt("rock, paper, or scissors").toLowerCase()), getComputerChoice());
         calcScore(roundResult.slice(0,1));
         console.log(roundResult.slice(1));
     }
