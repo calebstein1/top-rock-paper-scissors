@@ -1,3 +1,11 @@
+let playerScore = 0;
+let computerScore = 0;
+document.getElementById("player-score").textContent = playerScore;
+document.getElementById("computer-score").textContent = computerScore;
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => button.addEventListener("click", () => game(button.id)));
+
 let getComputerChoice = () => {
     let randNum = Math.floor(Math.random() * 3);
     switch (randNum) {
@@ -71,16 +79,14 @@ function playRound (playerSelection, computerSelection) {
         }
     }
 
-    let resultBegin = `${score}You play ${playerSelection}, computer plays ${computerSelection}\n`;
+    let resultBegin = `${score}You play ${playerSelection}, computer plays ${computerSelection}. `;
     let resultEnd = winlose === "tied" ? "You tied!" : `You ${winlose}! ${winner} beats ${loser}!`;
     let result = resultBegin.concat(resultEnd, "");
     return result;
 }
 
-function game() {
+function game(playerChoice) {
     let roundResult;
-    let playerScore = 0;
-    let computerScore = 0;
     let calcScore = (scoreNum) => {
         switch (scoreNum) {
             case "0":
@@ -94,33 +100,34 @@ function game() {
         }
         
     }
-    for (let i = 0; i < 5; i++) {
-        let validatePlayerSelection = (pSelection) => {
-            switch (pSelection) {
-                case "rock":
-                    break;
-                case "paper":
-                    break;
-                case "scissors":
-                    break;
-                default:
-                    console.log("Invalid entry, defaulting to rock");
-                    pSelection = "rock";
-            }
-            return pSelection;
-        }
-        roundResult = playRound(validatePlayerSelection(prompt("rock, paper, or scissors").toLowerCase()), getComputerChoice());
-        calcScore(roundResult.slice(0,1));
-        console.log(roundResult.slice(1));
-    }
-    while (computerScore === playerScore) {
-        roundResult = playRound(prompt("rock, paper, or scissors").toLowerCase(), getComputerChoice());
-        calcScore(roundResult.slice(0,1));
-        console.log(roundResult.slice(1));
-    }
-    let finalResult = playerScore > computerScore ? "win" : "lose";
+    roundResult = playRound(playerChoice, getComputerChoice());
+    calcScore(roundResult.slice(0,1));
+    document.getElementById("round-results").textContent = roundResult.slice(1);
+    document.getElementById("player-score").textContent = playerScore;
+    document.getElementById("computer-score").textContent = computerScore;
 
-    console.log(`You scored ${playerScore}, the computer scored ${computerScore}. You ${finalResult}!`);
+    if (playerScore >= 5 || computerScore >= 5) {
+        let finalResult = playerScore > computerScore ? "win" : "lose";
+        document.getElementById("round-results").textContent = `You scored ${playerScore}, the computer scored ${computerScore}. You ${finalResult}!`;
+
+        buttons.forEach(button => button.setAttribute("disabled", "dsabled"));
+        const rst = document.createElement("button");
+        document.querySelector("body").appendChild(rst);
+        rst.setAttribute("id", "rst");
+        rst.textContent = "Reset";
+
+        document.getElementById("rst").addEventListener("click", () => {
+            playerScore = 0;
+            computerScore = 0;
+
+            document.getElementById("round-results").textContent = "";
+            document.getElementById("player-score").textContent = playerScore;
+            document.getElementById("computer-score").textContent = computerScore;
+            buttons.forEach(button => button.removeAttribute("disabled"));
+
+            document.querySelector("body").removeChild(rst);
+        });
+    }
 }
 
 game();
